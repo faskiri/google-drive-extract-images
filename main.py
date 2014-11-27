@@ -14,9 +14,9 @@ from oauth2client.file import Storage
 from oauth2client import tools
 
 # Copy your credentials from the console
-CLIENT_ID = 'CLIENT_ID'
-CLIENT_SECRET = 'CLIENT_SECRET'
 folder_id = 'folder-id'
+CLIENT_ID = '1078892468156-lk6kdudv026jppopcaudaitos07rddku.apps.googleusercontent.com'
+CLIENT_SECRET = 'RFn4cV4Bi1PyTh1qEnrUcgJW'
 
 def get_credentials(path):
   storage = Storage(path)
@@ -68,12 +68,21 @@ while True:
         if openxml:
           resp, content = drive_service._http.request(openxml)
           if resp.status == 200:
+            if not os.path.exists('media'): os.mkdir('media')
+            ppt_dir = os.path.join('media',
+                file['title'].replace(' ', '_'))
+
+            base_dir = ppt_dir
+            for i in range(100):
+              if not os.path.exists(ppt_dir):
+                break
+              ppt_dir = base_dir + '_' + str(i)
+            os.mkdir(ppt_dir)
+
             with zipfile.ZipFile(StringIO.StringIO(content)) as z:
               for name in z.namelist():
                 if 'media' in name:
-                  if not os.path.exists('media'): os.mkdir('media')
-                  with z.open(name) as zi, open('media/%s-%s' % (
-                      file['title'].replace(' ', '_'),
+                  with z.open(name) as zi, open('%s/%s' % (ppt_dir,
                       name.replace('/', '-')), 'w') as media:
                     media.write(zi.read())
 
