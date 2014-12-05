@@ -70,6 +70,7 @@ while True:
           resp, content = drive_service._http.request(openxml)
           if resp.status == 200:
             if not os.path.exists('media'): os.mkdir('media')
+            if not os.path.exists('ppt'): os.mkdir('ppt')
             ppt_dir = os.path.join('media',
                 file['title'].replace(' ', '_'))
 
@@ -82,7 +83,7 @@ while True:
 
             with zipfile.ZipFile(StringIO.StringIO(content)) as z:
               for name in z.namelist():
-                if 'media' in name or '.xml.rels' in name or '*.xml' in name:
+                if 'media' in name or '.xml.rels' in name or '.xml' in name:
                   with z.open(name) as zi, open('%s/%s' % (ppt_dir,
                       os.path.basename(name)), 'w') as media:
                     media.write(zi.read())
