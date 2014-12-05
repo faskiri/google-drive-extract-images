@@ -15,6 +15,7 @@ from oauth2client import tools
 
 # Copy your credentials from the console
 folder_id = 'folder-id'
+folder_id = '0B__2OhShVLfSSUpvX1hlSUR5SW8'
 CLIENT_ID = '1078892468156-lk6kdudv026jppopcaudaitos07rddku.apps.googleusercontent.com'
 CLIENT_SECRET = 'RFn4cV4Bi1PyTh1qEnrUcgJW'
 
@@ -81,9 +82,9 @@ while True:
 
             with zipfile.ZipFile(StringIO.StringIO(content)) as z:
               for name in z.namelist():
-                if 'media' in name:
+                if 'media' in name or '.xml.rels' in name or '*.xml' in name:
                   with z.open(name) as zi, open('%s/%s' % (ppt_dir,
-                      name.replace('/', '-')), 'w') as media:
+                      os.path.basename(name)), 'w') as media:
                     media.write(zi.read())
 
     page_token = children.get('nextPageToken')
