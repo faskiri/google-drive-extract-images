@@ -26,19 +26,22 @@ def getrels(root):
 
   for d, meta in manifest.iteritems():
     with open('media/%s/manifest.xml' % d, 'w') as manifest_file:
-      manifest_file.write('<Module>\n')
+      manifest_file.write('<Modules>\n')
+      manifest_file.write('  <Module>\n')
+      manifest_file.write('    <ModuleName>%s</ModuleName>\n' % d)
 
       meta.sort(lambda (s1, k1), (s2, k2): cmp (int(s1), int(s2)))
 
       for (slide, img) in meta:
         manifest_file.write(
-          '  <LearningObject>\n'
-          '    <TextToDisplay>%s</TextToDisplay>\n'
-          '    <ImageToDisplay>%s</ImageToDisplay>\n'
-          '  </LearningObject>\n' % (
+          '    <LearningObject>\n'
+          '      <TextToDisplay>%s</TextToDisplay>\n'
+          '      <ImageToDisplay>%s</ImageToDisplay>\n'
+          '    </LearningObject>\n' % (
                   text('media/%s/slide%s.xml' % (d, slide)),
                   img))
-      manifest_file.write('</Module>')
+      manifest_file.write('  </Module>')
+      manifest_file.write('</Modules>')
 
 import sys
 getrels(sys.argv[1])
