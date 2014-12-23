@@ -9,6 +9,10 @@ CLIENT_ID = 'CLIENT_ID'
 CLIENT_SECRET = 'CLIENT_SECRET'
 folder_id = 'folder-id'
 
+Installing python client API
+----------------------------
+easy_install --upgrade google-api-python-client
+
 Google API enabling
 -------------------
 From https://developers.google.com/drive/web/quickstart/quickstart-python#step_1_enable_the_drive_api

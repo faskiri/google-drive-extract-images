@@ -5,7 +5,11 @@ import glob
 def text(path):
   exp = re.compile(r'<[^>]+>')
   with open(path) as file:
-    return ' '.join(exp.sub(' ', file.read()).split())
+    txt = []
+    for e in exp.sub(' ', file.read()).split():
+      if 'style.visibility' in e: continue
+      txt.append(e)
+    return ' '.join(txt)
 
 def getrels(root):
   sre = re.compile('image(\d*)\.')
@@ -25,7 +29,7 @@ def getrels(root):
         manifest[d] = m
 
   for d, meta in manifest.iteritems():
-    with open('media/%s/manifest.xml' % d, 'w') as manifest_file:
+    with open('xml/LearningObjectsModularList-%s.xml' % d, 'w') as manifest_file:
       manifest_file.write('<Modules>\n')
       manifest_file.write('  <Module>\n')
       manifest_file.write('    <ModuleName>%s</ModuleName>\n' % d)
@@ -39,8 +43,8 @@ def getrels(root):
           '      <ImageToDisplay>%s</ImageToDisplay>\n'
           '    </LearningObject>\n' % (
                   text('media/%s/slide%s.xml' % (d, slide)),
-                  img))
-      manifest_file.write('  </Module>')
+                  os.path.basename(img)))
+      manifest_file.write('  </Module>\n')
       manifest_file.write('</Modules>')
 
 import sys
