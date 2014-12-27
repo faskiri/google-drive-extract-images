@@ -1,6 +1,7 @@
 import os
 import re
 import glob
+import model
 
 def text(path):
   exp = re.compile(r'<[^>]+>')
@@ -29,23 +30,13 @@ def getrels(root):
         manifest[d] = m
 
   for d, meta in manifest.iteritems():
-    with open('xml/LearningObjectsModularList-%s.xml' % d, 'w') as manifest_file:
-      manifest_file.write('<Modules>\n')
-      manifest_file.write('  <Module>\n')
-      manifest_file.write('    <ModuleName>%s</ModuleName>\n' % d)
+    m = model.Model(d)
+    meta.sort(lambda (s1, k1), (s2, k2): cmp (int(s1), int(s2)))
 
-      meta.sort(lambda (s1, k1), (s2, k2): cmp (int(s1), int(s2)))
-
-      for (slide, img) in meta:
-        manifest_file.write(
-          '    <LearningObject>\n'
-          '      <TextToDisplay>%s</TextToDisplay>\n'
-          '      <ImageToDisplay>%s</ImageToDisplay>\n'
-          '    </LearningObject>\n' % (
-                  text('media/%s/slide%s.xml' % (d, slide)),
-                  os.path.basename(img)))
-      manifest_file.write('  </Module>\n')
-      manifest_file.write('</Modules>')
+    for (slide, img) in meta:
+      m.add_object(
+          text=text('media/%s/slide%s.xml' % (d, slide)),
+          image=os.path.basename(img))
 
 import sys
 getrels(sys.argv[1])
