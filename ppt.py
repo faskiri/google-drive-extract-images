@@ -12,8 +12,6 @@ from apiclient import errors
 # Copy your credentials from the console
 folder_id = 'folder-id'
 folder_id = '0B__2OhShVLfSSUpvX1hlSUR5SW8'
-CLIENT_ID = '1078892468156-lk6kdudv026jppopcaudaitos07rddku.apps.googleusercontent.com'
-CLIENT_SECRET = 'RFn4cV4Bi1PyTh1qEnrUcgJW'
 
 http = credentials.Authorizor().new_http_instance()
 drive_service = build('drive', 'v2', http=http)

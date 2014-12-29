@@ -6,6 +6,9 @@ from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
 from oauth2client import tools
 
+CLIENT_ID = '1078892468156-lk6kdudv026jppopcaudaitos07rddku.apps.googleusercontent.com'
+CLIENT_SECRET = 'RFn4cV4Bi1PyTh1qEnrUcgJW'
+
 class Authorizor(object):
   def __init__(self):
     self._path = 'credentials.db'
