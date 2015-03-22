@@ -1,3 +1,5 @@
+import os
+
 import collections
 
 LearningObject = collections.namedtuple(
@@ -12,7 +14,9 @@ class Model(object):
   def add_object(self, text, image):
     self._objs.append(LearningObject(text, image))
 
-  def write(self): 
+  def write(self):
+    if not os.path.exists('xml'): os.mkdir('xml')
+
     path = 'xml/LearningObjectsModularList-%s.xml' % self._name
     with open(path, 'w') as manifest_file:
       manifest_file.write('<Modules>\n')
