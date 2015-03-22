@@ -10,8 +10,9 @@ CLIENT_ID = '1078892468156-lk6kdudv026jppopcaudaitos07rddku.apps.googleuserconte
 CLIENT_SECRET = 'RFn4cV4Bi1PyTh1qEnrUcgJW'
 
 class Authorizor(object):
-  def __init__(self):
+  def __init__(self, args):
     self._path = 'credentials.db'
+    self._args = args
 
   def new_http_instance(self):
     credentials = self._get_credentials()
@@ -40,7 +41,7 @@ class Authorizor(object):
         redirect_uri=REDIRECT_URI)
 
     parser = argparse.ArgumentParser(parents=[tools.argparser])
-    flags = parser.parse_args()
+    flags = parser.parse_args(self._args)
     credentials = tools.run_flow(flow, storage, flags)
     storage.put(credentials)
     return credentials

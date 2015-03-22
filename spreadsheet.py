@@ -28,7 +28,7 @@ if m is None:
       "..../spreadsheets/d/13eDmNUa7qrb0sRE8DqGOJ0lNofw2I5gnsDIx7O8j1eA/...#gid=1223708539"
   sys.exit(1)
 
-http = credentials.Authorizor().new_http_instance()
+http = credentials.Authorizor(sys.argv[2:]).new_http_instance()
 service = build('drive', 'v2', http=http)
 id, gid = m.groups()
 metadata = service.files().get(fileId=id, fields='exportLinks').execute()
